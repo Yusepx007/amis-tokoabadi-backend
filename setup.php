@@ -87,19 +87,19 @@ try {
     $stmt->execute([3, 'Andi Wijaya', 'sales@abadiplaon.id', 'sales', $demoHash, 'mock_token_sales']);
     $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 
-    // Seed Products
-    $countProducts = $pdo->query("SELECT COUNT(*) FROM products")->fetchColumn();
-    if ($countProducts == 0) {
-        $stmt = $pdo->prepare("INSERT INTO products (id, kode_motif, nama, category_id, ukuran, satuan, harga_beli, harga_jual, stok, stok_minimum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([1, 'KAY-01', 'PVC Motif Kayu-01', 1, '20×40 cm', 'lembar', 65000, 85000, 48, 10]);
-        $stmt->execute([2, 'MAR-03', 'Wallpanel Marmer-03', 3, '30×60 cm', 'lembar', 100000, 125000, 5, 10]);
-        $stmt->execute([3, 'BAT-02', 'PVC Motif Batu-02', 1, '20×40 cm', 'lembar', 55000, 78000, 0, 10]);
-        $stmt->execute([4, 'GYP-60', 'Plafon Gypsum 60×60', 2, '60×60 cm', 'lembar', 30000, 45000, 120, 20]);
-        $stmt->execute([5, 'KAY-02', 'PVC Motif Kayu-02', 1, '20×40 cm', 'lembar', 68000, 90000, 35, 10]);
-        $stmt->execute([6, 'PLF-W01', 'Plafon PVC Putih', 2, '20×40 cm', 'meter_lari', 45000, 65000, 8, 15]);
-        $stmt->execute([7, 'WP-MRB-01', 'Wallpanel Marmer Hitam', 3, '60×120 cm', 'lembar', 120000, 165000, 22, 10]);
-        $stmt->execute([8, 'KAY-03', 'PVC Motif Kayu-03', 1, '20×40 cm', 'lembar', 70000, 95000, 15, 10]);
-    }
+    // Seed Products with real image paths from downloads
+    $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+    $pdo->exec("DELETE FROM products");
+    $stmt = $pdo->prepare("INSERT INTO products (id, kode_motif, nama, category_id, ukuran, satuan, harga_beli, harga_jual, stok, stok_minimum, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([1, 'KAY-01', 'PVC Motif Kayu-01', 1, '20×40 cm', 'lembar', 65000, 85000, 48, 10, 'images/PVC Board/Panel Wall - Cream.jpeg']);
+    $stmt->execute([2, 'MAR-03', 'Wallpanel Marmer-03', 3, '30×60 cm', 'lembar', 100000, 125000, 5, 10, 'images/Wallpanel Board/download (12).jpeg']);
+    $stmt->execute([3, 'BAT-02', 'PVC Motif Batu-02', 1, '20×40 cm', 'lembar', 55000, 78000, 0, 10, 'images/PVC Board/download (6).jpeg']);
+    $stmt->execute([4, 'GYP-60', 'Plafon Gypsum 60×60', 2, '60×60 cm', 'lembar', 30000, 45000, 120, 20, 'images/Plafon/latest ceiling design.jpeg']);
+    $stmt->execute([5, 'KAY-02', 'PVC Motif Kayu-02', 1, '20×40 cm', 'lembar', 68000, 90000, 35, 10, 'images/PVC Board/download (7).jpeg']);
+    $stmt->execute([6, 'PLF-W01', 'Plafon PVC Putih', 2, '20×40 cm', 'meter_lari', 45000, 65000, 8, 15, 'images/Plafon/download (14).jpeg']);
+    $stmt->execute([7, 'WP-MRB-01', 'Wallpanel Marmer Hitam', 3, '60×120 cm', 'lembar', 120000, 165000, 22, 10, 'images/Wallpanel Board/download (13).jpeg']);
+    $stmt->execute([8, 'KAY-03', 'PVC Motif Kayu-03', 1, '20×40 cm', 'lembar', 70000, 95000, 15, 10, 'images/PVC Board/download (9).jpeg']);
+    $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 
     // Seed Transactions
     $countTransactions = $pdo->query("SELECT COUNT(*) FROM transactions")->fetchColumn();
